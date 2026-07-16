@@ -13,7 +13,7 @@ body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,san
 .card{background:var(--card);border-radius:22px;box-shadow:0 8px 26px rgba(20,80,66,.12);padding:30px 30px;flex:1;display:flex;flex-direction:column;justify-content:center}
 .chip{display:inline-block;color:#fff;font-weight:800;font-size:17px;padding:7px 16px;border-radius:22px}
 .qn{font-size:20px;color:var(--mut);font-weight:800;margin:14px 0 2px}
-.qtext{font-size:34px;font-weight:800;color:var(--ink);line-height:1.35;margin:6px 0 18px}
+.qtext{font-size:56px;font-weight:800;color:var(--ink);line-height:1.26;margin:10px 0 22px}
 .memo{background:#fbf3e0;border:2px solid var(--gold);border-radius:16px;padding:14px 18px;font-size:18px;color:#8a6512;font-weight:700}
 .timerwrap{display:flex;flex-direction:column;align-items:center;margin-top:20px}
 .timer{font-size:96px;font-weight:800;color:var(--grn);font-variant-numeric:tabular-nums;letter-spacing:2px;line-height:1}
@@ -33,8 +33,8 @@ body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,san
 .steps li{display:flex;gap:14px;align-items:flex-start;margin:14px 0;font-size:22px}
 .num{flex:0 0 auto;width:40px;height:40px;border-radius:50%;background:var(--grn);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px}
 .hl{color:var(--gold);font-weight:800}
-.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:12px 20px calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(6px)}
-.nav .navbtn{flex:1;background:var(--grn);color:#fff;border:none;border-radius:14px;font-size:18px;font-weight:800;padding:14px;cursor:pointer;font-family:inherit}
+.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 18px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(6px)}
+.nav .navbtn{flex:0 0 auto;background:var(--grn);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;padding:8px 16px;cursor:pointer;font-family:inherit;opacity:.9}
 .nav .navbtn.ghost{background:#fff;color:var(--grn);border:2px solid var(--grn)}
 .nav .navbtn:disabled{opacity:.4}
 .pill{display:inline-block;background:#e6f4f1;color:#17867a;font-weight:800;font-size:14px;padding:6px 14px;border-radius:20px}
@@ -43,7 +43,7 @@ body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,san
 .sd{width:30px;height:30px;border-radius:50%;background:#d3e3db;color:#5a7266;display:grid;place-items:center;font-size:14px;font-weight:800}
 .sd.done{background:var(--grn2);color:#fff}.sd.cur{background:var(--gold);color:#fff;transform:scale(1.12)}
 #musicbtn{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;z-index:60;background:#fff;color:var(--grn);border:2px solid var(--grn2);border-radius:22px;font-weight:800;font-size:14px;padding:8px 14px;cursor:pointer;font-family:inherit;box-shadow:0 3px 10px rgba(0,0,0,.12)}
-@media(max-width:600px){.qtext{font-size:26px}.timer{font-size:74px}.big{font-size:32px}.lead{font-size:18px}.steps li{font-size:18px}.card{padding:22px 18px;border-radius:16px}}
+@media(max-width:600px){.qtext{font-size:38px}.timer{font-size:74px}.big{font-size:32px}.lead{font-size:18px}.steps li{font-size:18px}.card{padding:22px 18px;border-radius:16px}}
 </style></head><body>
 <button id="musicbtn" onclick="toggleMusic()">🔇 音樂 關</button>
 <div id="ytwrap" style="position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden"><div id="ytplayer"></div></div>
@@ -100,7 +100,7 @@ function render(){
    <div class="lead" style="color:var(--mut)">共學共創 ‧ 新版玩法</div>
    <div class="lead" style="margin-top:28px">先在座位上把 9 題討論、寫成 memo，<br>再起身張貼、走 9 站、拍照、交流。</div>
    <div class="lead" style="margin-top:22px;color:var(--grn);font-weight:800">按「下一頁 ›」開始 →</div>
-   <div class="memo" style="margin-top:20px;text-align:left">🎵 討論與走站時會播放背景音樂（需連網）；主持人按「▶ 開始」即會自動響起，右上角可隨時開關。</div></div>`;}
+   <div class="memo" style="margin-top:20px;text-align:left">🎵 主持人按「▶ 開始」討論時，會自動播放背景音樂（需連網）；換「下一題／下一頁」就自動停止。右上角可隨時手動開關。</div></div>`;}
  else if(s.t==="howto"){top.innerHTML=`<span>世界咖啡館 ‧ 玩法說明</span>`;card.innerHTML=`
    <ul class="steps">
     <li><span class="num">1</span><div><b>座位討論（先坐著）</b>：依序看 9 題，同桌一起討論。<span class="hl">微觀每題 2 分鐘、宏觀每題 4 分鐘</span>。</div></li>
@@ -154,6 +154,7 @@ function render(){
  document.getElementById("next").disabled=(idx===SLIDES.length-1);
 }
 function go(d){const n=idx+d;if(n<0||n>=SLIDES.length)return;
+ musicPause();
  if(SLIDES[n].t==="gallery"&&SLIDES[idx].t!=="gallery")station=1;
  idx=n;running=false;clearInterval(tick);render();window.scrollTo(0,0);}
 document.addEventListener("keydown",e=>{
